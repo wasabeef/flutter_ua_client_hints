@@ -71,7 +71,7 @@ class AppDio with DioMixin implements Dio {
 }
 ```
 
-### Values
+### APIs
 ```dart
 final String ua = await userAgent();
 
