@@ -5,7 +5,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://pub.dartlang.org/packages/ua_client_hints">
+  <a href="https://pub.dev/packages/ua_client_hints">
     <img src="https://img.shields.io/pub/v/ua_client_hints.svg">
   </a>
   <a href="https://github.com/wasabeef/flutter_ua_client_hints/actions">
@@ -31,7 +31,7 @@
 |UA-Arch|Sec-CH-UA-Arch|"ARM64"|The underlying architecture for the device.<br>While this may not be relevant to displaying the page,<br>the site may want to offer a download which defaults to the right format.|
 |UA-Model|Sec-CH-UA-Model|"Pixel 3"|The device model.|
 
-## Installation
+## [Installation](https://pub.dev/packages/ua_client_hints)
 
 1. Add this to your package's pubspec.yaml file
 ```yaml
