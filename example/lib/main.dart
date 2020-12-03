@@ -8,7 +8,7 @@ void main() async {
 
   final String ua = await userAgent();
   final UserAgentData uaData = await userAgentData();
-  final Map<String, dynamic> header = await userAgentClientHintsHeader();
+  final Map<String, String> header = await userAgentClientHintsHeader();
 
   print('## User-Agent ##');
   print('User-Agent: $ua');

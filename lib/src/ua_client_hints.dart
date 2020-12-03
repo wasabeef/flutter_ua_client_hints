@@ -37,7 +37,7 @@ Future<UserAgentData> userAgentData() async {
       ));
 }
 
-Future<Map<String, dynamic>> userAgentClientHintsHeader() async {
+Future<Map<String, String>> userAgentClientHintsHeader() async {
   final map = await MethodChannel('ua_client_hints').invokeMethod('getInfo')
       as Map<dynamic, dynamic>;
   return {
@@ -48,6 +48,6 @@ Future<Map<String, dynamic>> userAgentClientHintsHeader() async {
     'Sec-CH-UA-Platform-Version': map['platformVersion'],
     'Sec-CH-UA': '"${map['appName']}"; v="${map['appVersion']}"',
     'Sec-CH-UA-Full-Version': map['appVersion'],
-    'Sec-CH-UA-Mobile': true,
+    'Sec-CH-UA-Mobile': map['mobile'] ? '?1' : '?0',
   };
 }
