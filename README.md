@@ -5,7 +5,7 @@
   </a>
 </p>
 <p align="center">
-  <a href="https://pub.dartlang.org/packages/ua_client_hints">
+  <a href="https://pub.dev/packages/ua_client_hints">
     <img src="https://img.shields.io/pub/v/ua_client_hints.svg">
   </a>
   <a href="https://github.com/wasabeef/flutter_ua_client_hints/actions">
@@ -21,6 +21,7 @@
 [User-Agent Client Hints](https://wicg.github.io/ua-client-hints/)  
 [Improving user privacy and developer experience with User-Agent Client Hints](https://web.dev/user-agent-client-hints/)  
 
+[User-Agent Client Hints Demo on Browser](https://user-agent-client-hints.glitch.me/?uach=UA-Arch&uach=UA-Full-Version&uach=UA-Mobile&uach=UA-Model&uach=UA-Platform-Version&uach=UA-Platform&uach=UA)
 |⬇️ Response Accept-CH|⬆️ Request header|⬆️ RequestExample value|Description|
 |--|--|--|--|
 |UA|Sec-CH-UA|"Chromium";v="84",<br>"Google Chrome";v="84"|List of browser brands and their significant version.|
@@ -31,12 +32,12 @@
 |UA-Arch|Sec-CH-UA-Arch|"ARM64"|The underlying architecture for the device.<br>While this may not be relevant to displaying the page,<br>the site may want to offer a download which defaults to the right format.|
 |UA-Model|Sec-CH-UA-Model|"Pixel 3"|The device model.|
 
-## Installation
+## [Installation](https://pub.dev/packages/ua_client_hints)
 
 1. Add this to your package's pubspec.yaml file
 ```yaml
 dependencies:
-  ua_client_hints: ^1.0.0
+  ua_client_hints: ^1.x.x
 ```
 
 2. You can install packages from the command line
@@ -50,11 +51,10 @@ $ flutter pub get
 
 Add to the request header.
 ```dart
-// ignore: prefer_mixin
 class AppDio with DioMixin implements Dio {
   AppDio._([BaseOptions options]) {
     options = BaseOptions(
-      baseUrl: "https://wasabeef.jp,
+      baseUrl: 'https://wasabeef.jp',
     );
 
     this.options = options;
@@ -75,7 +75,7 @@ class AppDio with DioMixin implements Dio {
 ```dart
 final String ua = await userAgent();
 
-print('User-Agent: $ua');  // 'SampleApp/1.0.0 (Android 11; Pixel 4 XL; coral; arm64-v8a)'
+print('User-Agent: $ua');  // e.g.. 'SampleApp/1.0.0 (Android 11; Pixel 4 XL; coral; arm64-v8a)'
 ```
 
 ```dart
@@ -103,5 +103,5 @@ print("Sec-CH-UA-Platform:         ${header['Sec-CH-UA-Platform']}");         //
 print("Sec-CH-UA-Platform-Version: ${header['Sec-CH-UA-Platform-Version']}"); // e.g.. '10'
 print("Sec-CH-UA:                  ${header['Sec-CH-UA']}");                  // e.g.. '"SampleApp"; v="1.0.0"'
 print("Sec-CH-UA-Full-Version:     ${header['Sec-CH-UA-Full-Version']}");     // e.g.. '1.0.0'
-print("Sec-CH-UA-Mobile:           ${header['Sec-CH-UA-Mobile']}");           // e.g.. true
+print("Sec-CH-UA-Mobile:           ${header['Sec-CH-UA-Mobile']}");           // e.g.. '?1' (true) or ?0 (false)
 ```
