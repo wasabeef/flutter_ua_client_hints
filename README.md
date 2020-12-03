@@ -103,5 +103,5 @@ print("Sec-CH-UA-Platform:         ${header['Sec-CH-UA-Platform']}");         //
 print("Sec-CH-UA-Platform-Version: ${header['Sec-CH-UA-Platform-Version']}"); // e.g.. '10'
 print("Sec-CH-UA:                  ${header['Sec-CH-UA']}");                  // e.g.. '"SampleApp"; v="1.0.0"'
 print("Sec-CH-UA-Full-Version:     ${header['Sec-CH-UA-Full-Version']}");     // e.g.. '1.0.0'
-print("Sec-CH-UA-Mobile:           ${header['Sec-CH-UA-Mobile']}");           // e.g.. '?1' (true) or ?0 (false)
+print("Sec-CH-UA-Mobile:           ${header['Sec-CH-UA-Mobile']}");           // e.g.. '?1' (true) or '?0' (false)
 ```
