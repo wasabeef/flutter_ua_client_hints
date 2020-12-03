@@ -42,13 +42,13 @@ class UAClientHintsPlugin : FlutterPlugin, MethodCallHandler {
           "brand" to info?.applicationInfo?.loadLabel(context.packageManager)?.toString(), // e.g.. Sample App
           "version" to info?.versionName, // e.g.. 1.0.0
           "mobile" to (uiManager.currentModeType == Configuration.UI_MODE_TYPE_NORMAL), // true/false
+					"device" to Build.DEVICE, // e.g.. coral
 
-          // AppData
+          // PackageData
           "appName" to info?.applicationInfo?.loadLabel(context.packageManager)?.toString(), // e.g.. Sample App
           "appVersion" to info?.versionName, // e.g.. 1.0.0
           "packageName" to info?.applicationInfo?.packageName, // e.g..  jp.wasabeef.ua
           "buildNumber" to getVersionCode(context), // e.g.. 1
-          "device" to Build.DEVICE, // e.g.. coral
       ))
 		} else {
 			result.notImplemented()

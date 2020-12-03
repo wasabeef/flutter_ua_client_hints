@@ -22,13 +22,13 @@ public class UAClientHintsPlugin: NSObject, FlutterPlugin {
         "brand": Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") ?? "App", // e.g.. Sample App
         "version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString"), // e.g.. 1.0.0
         "mobile": current.userInterfaceIdiom == .phone || current.userInterfaceIdiom == .pad, // true/false
+				"device": device(), // e.g.. iPhone13,4
 
-        // AppData
+        // PackageData
         "appName": Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName"), // e.g.. Sample App
         "appVersion": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString"), // e.g.. 1.0.0
         "packageName": Bundle.main.bundleIdentifier, // e.g.. jp.wasabeef.ua
         "buildNumber": Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion"), // e.g.. 1
-        "device": device(), // e.g.. iPhone13,4
       ])
     } else {
       result(FlutterMethodNotImplemented)

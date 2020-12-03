@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ua_client_hints/ua_client_hints.dart';
-import 'package:ua_client_hints/user_agent_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -25,22 +24,15 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String ua;
     UserAgentData uaData;
     Map<String, dynamic> header;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       ua = await userAgent();
       uaData = await userAgentData();
       header = await userAgentClientHintsHeader();
     } on PlatformException {}
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
 
     setState(() {
       _ua = ua;
@@ -76,11 +68,11 @@ class _MyAppState extends State<MyApp> {
             Text('model: ${_uaData?.model}'),
             Text('brand: ${_uaData?.brand}'),
             Text('mobile: ${_uaData?.mobile}'),
-            Text('appName: ${_uaData?.app?.appName}'),
-            Text('appVersion: ${_uaData?.app?.appVersion}'),
-            Text('packageName: ${_uaData?.app?.packageName}'),
-            Text('buildNumber: ${_uaData?.app?.buildNumber}'),
-            Text('device: ${_uaData?.app?.device}'),
+            Text('device: ${_uaData?.device}'),
+            Text('appName: ${_uaData?.package?.appName}'),
+            Text('appVersion: ${_uaData?.package?.appVersion}'),
+            Text('packageName: ${_uaData?.package?.packageName}'),
+            Text('buildNumber: ${_uaData?.package?.buildNumber}'),
             //
             SizedBox(height: 24),
             //
