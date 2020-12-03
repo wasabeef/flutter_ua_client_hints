@@ -50,7 +50,6 @@ $ flutter pub get
 
 Add to the request header.
 ```dart
-// ignore: prefer_mixin
 class AppDio with DioMixin implements Dio {
   AppDio._([BaseOptions options]) {
     options = BaseOptions(
