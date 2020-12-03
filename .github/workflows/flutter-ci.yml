@@ -31,18 +31,6 @@ jobs:
             ${{ runner.os }}-gradle-
             ${{ runner.os }}-
 
-      - name: Cache CocoaPods modules
-        uses: actions/cache@v2
-        env:
-          cache-number: ${{ secrets.CACHE_NUMBER }}
-        with:
-          path: Pods
-          key: ${{ runner.os }}-pods-${{ env.cache-number }}-${{ hashFiles('ios/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-${{ env.cache-name }}-
-            ${{ runner.os }}-pods-
-            ${{ runner.os }}-
-
       - name: Cache Flutter modules
         uses: actions/cache@v2
         env:
@@ -63,7 +51,6 @@ jobs:
 #      - name: Check for any formatting and statically analyze the code.
 #        run: make format-analyze
 
-      - name: Build ipa and apk
+      - name: Build
         run: |
           make build-android
-          make build-ios
