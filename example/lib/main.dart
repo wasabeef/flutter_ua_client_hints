@@ -13,7 +13,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _ua = '';
-  UserAgentData? _uaData;
+  UserAgentData _uaData;
   Map<String, dynamic> _header = {};
 
   @override
@@ -66,10 +66,10 @@ class _MyAppState extends State<MyApp> {
             Text('brand: ${_uaData?.brand}'),
             Text('mobile: ${_uaData?.mobile}'),
             Text('device: ${_uaData?.device}'),
-            Text('appName: ${_uaData?.package.appName}'),
-            Text('appVersion: ${_uaData?.package.appVersion}'),
-            Text('packageName: ${_uaData?.package.packageName}'),
-            Text('buildNumber: ${_uaData?.package.buildNumber}'),
+            Text('appName: ${_uaData?.package?.appName}'),
+            Text('appVersion: ${_uaData?.package?.appVersion}'),
+            Text('packageName: ${_uaData?.package?.packageName}'),
+            Text('buildNumber: ${_uaData?.package?.buildNumber}'),
             //
             SizedBox(height: 24),
             //
