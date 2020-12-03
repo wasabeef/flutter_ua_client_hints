@@ -1,89 +1,43 @@
-import 'dart:async';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ua_client_hints/ua_client_hints.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  // For Demo
+  WidgetsFlutterBinding.ensureInitialized();
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
+  final ua = await userAgent();
+  final uaData = await userAgentData();
+  final header = await userAgentClientHintsHeader();
 
-class _MyAppState extends State<MyApp> {
-  String _ua = '';
-  UserAgentData _uaData;
-  Map<String, dynamic> _header = {};
+  print('## User-Agent ##');
+  print('User-Agent: $ua');
+  //
+  //
+  print('## User-Agent Client Hints ##');
+  print('platform: ${uaData.platform}');
+  print('platformVersion: ${uaData.platformVersion}');
+  print('model: ${uaData.model}');
+  print('brand: ${uaData.brand}');
+  print('mobile: ${uaData.mobile}');
+  print('device: ${uaData.device}');
+  print('appName: ${uaData.package.appName}');
+  print('appVersion: ${uaData.package.appVersion}');
+  print('packageName: ${uaData.package.packageName}');
+  print('buildNumber: ${uaData.package.buildNumber}');
+  //
+  //
+  print('## User-Agent Client Hints ##');
+  // header.forEach((key, value) => print('$key: $value'));
+  print("Sec-CH-UA-Arch :${header['Sec-CH-UA-Arch']}");
+  print("Sec-CH-UA-Model :${header['Sec-CH-UA-Model']}");
+  print("Sec-CH-UA-Platform :${header['Sec-CH-UA-Platform']}");
+  print("Sec-CH-UA-Platform-Version :${header['Sec-CH-UA-Platform-Version']}");
+  print("Sec-CH-UA :${header['Sec-CH-UA']}");
+  print("Sec-CH-UA-Full-Version :${header['Sec-CH-UA-Full-Version']}");
+  print("Sec-CH-UA-Mobile :${header['Sec-CH-UA-Mobile']}");
 
-  @override
-  void initState() {
-    super.initState();
-    initPlatformState();
-  }
-
-  Future<void> initPlatformState() async {
-    try {
-      final ua = await userAgent();
-      final uaData = await userAgentData();
-      final header = await userAgentClientHintsHeader();
-      setState(() {
-        _ua = ua;
-        _uaData = uaData;
-        _header = header;
-      });
-    } on PlatformException catch (e) {
-      debugPrint(e.message);
-      rethrow;
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('User-Agent Client Hints'),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              '## UserAgent',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text('${_ua}'),
-            //
-            SizedBox(height: 24),
-            //
-            Text(
-              '## UserAgentData',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            Text('platform: ${_uaData?.platform}'),
-            Text('platformVersion: ${_uaData?.platformVersion}'),
-            Text('model: ${_uaData?.model}'),
-            Text('brand: ${_uaData?.brand}'),
-            Text('mobile: ${_uaData?.mobile}'),
-            Text('device: ${_uaData?.device}'),
-            Text('appName: ${_uaData?.package?.appName}'),
-            Text('appVersion: ${_uaData?.package?.appVersion}'),
-            Text('packageName: ${_uaData?.package?.packageName}'),
-            Text('buildNumber: ${_uaData?.package?.buildNumber}'),
-            //
-            SizedBox(height: 24),
-            //
-            Text(
-              '## User-Agent Client Hints',
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-
-            for (var i = 0; i < _header.entries.length; i++)
-              Text(
-                  '${_header.keys.elementAt(i)}: ${_header.values.elementAt(i)}'),
-          ],
-        ),
-      ),
-    );
-  }
+  return runApp(MaterialApp(
+    home: Scaffold(body: Center(child: Text('User-Agent Client Hints'))),
+  ));
 }
