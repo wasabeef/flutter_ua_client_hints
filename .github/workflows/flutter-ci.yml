@@ -53,5 +53,4 @@ jobs:
 
       - name: Build
         run: |
-          cd example/
           make build-android

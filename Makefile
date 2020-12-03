@@ -26,12 +26,12 @@ format-analyze:
 
 .PHONY: run
 run-dev:
-	flutter run --target example/lib/main.dart
+	cd example && flutter run --target lib/main.dart
 
 .PHONY: build-android
 build-android:
-	flutter build apk --target example/lib/main.dart
+	 cd example/ && flutter build apk --target lib/main.dart
 
 .PHONY: build-ios
 build-ios:
-	flutter build ios --no-codesign --target example/lib/main.dart
+	cd example/ && flutter build ios --no-codesign --target lib/main.dart
