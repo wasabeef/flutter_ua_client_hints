@@ -20,8 +20,8 @@
 
 [User-Agent Client Hints](https://wicg.github.io/ua-client-hints/)  
 [Improving user privacy and developer experience with User-Agent Client Hints](https://web.dev/user-agent-client-hints/)  
+[User-Agent Client Hints Demo on Browser](https://user-agent-client-hints.glitch.me/?uach=UA-Arch&uach=UA-Full-Version&uach=UA-Mobile&uach=UA-Model&uach=UA-Platform-Version&uach=UA-Platform&uach=UA)  
 
-[User-Agent Client Hints Demo on Browser](https://user-agent-client-hints.glitch.me/?uach=UA-Arch&uach=UA-Full-Version&uach=UA-Mobile&uach=UA-Model&uach=UA-Platform-Version&uach=UA-Platform&uach=UA)
 |⬇️ Response Accept-CH|⬆️ Request header|⬆️ RequestExample value|Description|
 |--|--|--|--|
 |UA|Sec-CH-UA|"Chromium";v="84",<br>"Google Chrome";v="84"|List of browser brands and their significant version.|
