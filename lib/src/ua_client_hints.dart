@@ -12,8 +12,9 @@ String _userAgent(Map<dynamic, dynamic> map) {
 }
 
 Future<String> userAgent() async {
-  return _userAgent(
-      await MethodChannel('ua_client_hints').invokeMethod('getInfo'));
+  final map = await MethodChannel('ua_client_hints').invokeMethod('getInfo')
+      as Map<dynamic, dynamic>;
+  return _userAgent(map);
 }
 
 Future<UserAgentData> userAgentData() async {

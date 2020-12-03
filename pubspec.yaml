@@ -1,6 +1,6 @@
 name: ua_client_hints
 description: Provide User-Agent Client Hints plugin.
-version: 0.0.1
+version: 0.0.1-nullsafety.0
 author: Daichi Furiya <dadadada.chop@gmail.com>
 homepage: https://github.com/wasabeef/flutter_ua_client_hints
 repository: https://github.com/wasabeef/flutter_ua_client_hints
@@ -8,7 +8,7 @@ documentation: https://github.com/wasabeef/flutter_ua_client_hints
 issue_tracker: https://github.com/wasabeef/flutter_ua_client_hints/issues
 
 environment:
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: '>=2.12.0-29.10.beta <3.0.0'
   flutter: '>=1.22.0'
 
 dependencies:

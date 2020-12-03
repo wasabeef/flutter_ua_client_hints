@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ua_client_hints/ua_client_hints.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
   @override
@@ -14,9 +12,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _ua;
-  UserAgentData _uaData;
-  Map<String, dynamic> _header;
+  String _ua = '';
+  UserAgentData? _uaData;
+  Map<String, dynamic> _header = {};
 
   @override
   void initState() {
@@ -25,20 +23,19 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    String ua;
-    UserAgentData uaData;
-    Map<String, dynamic> header;
     try {
-      ua = await userAgent();
-      uaData = await userAgentData();
-      header = await userAgentClientHintsHeader();
-    } on PlatformException {}
-
-    setState(() {
-      _ua = ua;
-      _uaData = uaData;
-      _header = header;
-    });
+      final ua = await userAgent();
+      final uaData = await userAgentData();
+      final header = await userAgentClientHintsHeader();
+      setState(() {
+        _ua = ua;
+        _uaData = uaData;
+        _header = header;
+      });
+    } on PlatformException catch (e) {
+      debugPrint(e.message);
+      rethrow;
+    }
   }
 
   @override
@@ -46,7 +43,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('User-Agent Client Hints'),
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,10 +66,10 @@ class _MyAppState extends State<MyApp> {
             Text('brand: ${_uaData?.brand}'),
             Text('mobile: ${_uaData?.mobile}'),
             Text('device: ${_uaData?.device}'),
-            Text('appName: ${_uaData?.package?.appName}'),
-            Text('appVersion: ${_uaData?.package?.appVersion}'),
-            Text('packageName: ${_uaData?.package?.packageName}'),
-            Text('buildNumber: ${_uaData?.package?.buildNumber}'),
+            Text('appName: ${_uaData?.package.appName}'),
+            Text('appVersion: ${_uaData?.package.appVersion}'),
+            Text('packageName: ${_uaData?.package.packageName}'),
+            Text('buildNumber: ${_uaData?.package.buildNumber}'),
             //
             SizedBox(height: 24),
             //
@@ -80,7 +77,8 @@ class _MyAppState extends State<MyApp> {
               '## User-Agent Client Hints',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            for (var i = 0; _header != null && i < _header.entries.length; i++)
+
+            for (var i = 0; i < _header.entries.length; i++)
               Text(
                   '${_header.keys.elementAt(i)}: ${_header.values.elementAt(i)}'),
           ],
