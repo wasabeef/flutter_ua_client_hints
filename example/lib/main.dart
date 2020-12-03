@@ -17,6 +17,7 @@ void main() async {
   print('## User-Agent Client Hints ##');
   print('platform: ${uaData.platform}');
   print('platformVersion: ${uaData.platformVersion}');
+  print('architecture: ${uaData.architecture}');
   print('model: ${uaData.model}');
   print('brand: ${uaData.brand}');
   print('mobile: ${uaData.mobile}');
