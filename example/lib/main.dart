@@ -6,9 +6,9 @@ void main() async {
   // For Demo
   WidgetsFlutterBinding.ensureInitialized();
 
-  final ua = await userAgent();
-  final uaData = await userAgentData();
-  final header = await userAgentClientHintsHeader();
+  final String ua = await userAgent();
+  final UserAgentData uaData = await userAgentData();
+  final Map<String, dynamic> header = await userAgentClientHintsHeader();
 
   print('## User-Agent ##');
   print('User-Agent: $ua');
@@ -29,6 +29,7 @@ void main() async {
   //
   print('## User-Agent Client Hints ##');
   // header.forEach((key, value) => print('$key: $value'));
+  print("User-Agent :${header['User-Agent']}");
   print("Sec-CH-UA-Arch :${header['Sec-CH-UA-Arch']}");
   print("Sec-CH-UA-Model :${header['Sec-CH-UA-Model']}");
   print("Sec-CH-UA-Platform :${header['Sec-CH-UA-Platform']}");
