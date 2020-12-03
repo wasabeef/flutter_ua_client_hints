@@ -54,7 +54,7 @@ Add to the request header.
 class AppDio with DioMixin implements Dio {
   AppDio._([BaseOptions options]) {
     options = BaseOptions(
-      baseUrl: "https://wasabeef.jp,
+      baseUrl: 'https://wasabeef.jp',
     );
 
     this.options = options;
