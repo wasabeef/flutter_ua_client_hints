@@ -14,7 +14,11 @@
   <a href="https://pub.dev/packages/effective_dart">
     <img src="https://img.shields.io/badge/style-effective_dart-40c4ff.svg" />
   </a>
+  <a href="https://pub.dev/packages/ua_client_hints">
+    <img src="https://img.shields.io/badge/-Null%20Safety-blue.svg" />
+  </a>
 </p>
+                                                                           
 
 ## What's User-Agent Client Hints?
 
@@ -33,6 +37,8 @@
 |UA-Model|Sec-CH-UA-Model|"Pixel 3"|The device model.|
 
 ## [Installation](https://pub.dev/packages/ua_client_hints)
+
+0. This plugin is set the [Null Safety](https://flutter.dev/docs/null-safety).
 
 1. Add this to your package's pubspec.yaml file
 ```yaml
