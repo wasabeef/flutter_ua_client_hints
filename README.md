@@ -1,4 +1,4 @@
-# User-Agent Client Hints for Flutter
+# [User-Agent Client Hints for Flutter](https://pub.dev/packages/ua_client_hints)
 <p align="center">
   <a href="https://pub.dev/packages/ua_client_hints">
     <img src="https://github.com/wasabeef/flutter_ua_client_hints/raw/main/art/ua_client_hints.png" width="100%/>
