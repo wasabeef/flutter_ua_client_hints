@@ -1,4 +1,4 @@
-# User-Agent Client Hints for Flutter
+# [User-Agent Client Hints for Flutter](https://pub.dev/packages/ua_client_hints)
 <p align="center">
   <a href="https://pub.dev/packages/ua_client_hints">
     <img src="https://github.com/wasabeef/flutter_ua_client_hints/raw/main/art/ua_client_hints.png" width="100%/>
@@ -14,14 +14,18 @@
   <a href="https://pub.dev/packages/effective_dart">
     <img src="https://img.shields.io/badge/style-effective_dart-40c4ff.svg" />
   </a>
+  <a href="https://pub.dev/packages/ua_client_hints">
+    <img src="https://img.shields.io/badge/-Null%20Safety-blue.svg" />
+  </a>
 </p>
+                                                                           
 
 ## What's User-Agent Client Hints?
 
 [User-Agent Client Hints](https://wicg.github.io/ua-client-hints/)  
 [Improving user privacy and developer experience with User-Agent Client Hints](https://web.dev/user-agent-client-hints/)  
+[User-Agent Client Hints Demo on Browser](https://user-agent-client-hints.glitch.me/?uach=UA-Arch&uach=UA-Full-Version&uach=UA-Mobile&uach=UA-Model&uach=UA-Platform-Version&uach=UA-Platform&uach=UA)  
 
-[User-Agent Client Hints Demo on Browser](https://user-agent-client-hints.glitch.me/?uach=UA-Arch&uach=UA-Full-Version&uach=UA-Mobile&uach=UA-Model&uach=UA-Platform-Version&uach=UA-Platform&uach=UA)
 |⬇️ Response Accept-CH|⬆️ Request header|⬆️ RequestExample value|Description|
 |--|--|--|--|
 |UA|Sec-CH-UA|"Chromium";v="84",<br>"Google Chrome";v="84"|List of browser brands and their significant version.|
@@ -33,6 +37,8 @@
 |UA-Model|Sec-CH-UA-Model|"Pixel 3"|The device model.|
 
 ## [Installation](https://pub.dev/packages/ua_client_hints)
+
+0. This plugin is set the [Null Safety](https://flutter.dev/docs/null-safety).
 
 1. Add this to your package's pubspec.yaml file
 ```yaml
