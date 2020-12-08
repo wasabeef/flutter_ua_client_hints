@@ -48,7 +48,7 @@ class UAClientHintsPlugin : FlutterPlugin, MethodCallHandler {
           "appName" to info?.applicationInfo?.loadLabel(context.packageManager)?.toString(), // e.g.. Sample App
           "appVersion" to info?.versionName, // e.g.. 1.0.0
           "packageName" to info?.applicationInfo?.packageName, // e.g..  jp.wasabeef.ua
-          "buildNumber" to getVersionCode(context), // e.g.. 1
+          "buildNumber" to getVersionCode(context) // e.g.. 1
       ))
 		} else {
 			result.notImplemented()

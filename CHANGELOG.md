@@ -1,3 +1,8 @@
+## 1.0.2
+
+Bug Fix:
+  - Set Android minSdkVersion to 21.
+
 ## 1.0.0, 1.0.1
 
 Initial release.
