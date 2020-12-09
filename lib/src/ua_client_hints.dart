@@ -12,14 +12,14 @@ String _userAgent(Map<dynamic, dynamic> map) {
 }
 
 Future<String> userAgent() async {
-  final map = await MethodChannel('ua_client_hints').invokeMethod('getInfo')
-      as Map<dynamic, dynamic>;
+  final map = await const MethodChannel('ua_client_hints')
+      .invokeMethod('getInfo') as Map<dynamic, dynamic>;
   return _userAgent(map);
 }
 
 Future<UserAgentData> userAgentData() async {
-  final map = await MethodChannel('ua_client_hints').invokeMethod('getInfo')
-      as Map<dynamic, dynamic>;
+  final map = await const MethodChannel('ua_client_hints')
+      .invokeMethod('getInfo') as Map<dynamic, dynamic>;
   return UserAgentData(
       platform: map['platform'],
       platformVersion: map['platformVersion'],
@@ -38,8 +38,8 @@ Future<UserAgentData> userAgentData() async {
 }
 
 Future<Map<String, String>> userAgentClientHintsHeader() async {
-  final map = await MethodChannel('ua_client_hints').invokeMethod('getInfo')
-      as Map<dynamic, dynamic>;
+  final map = await const MethodChannel('ua_client_hints')
+      .invokeMethod('getInfo') as Map<dynamic, dynamic>;
   return {
     'User-Agent': _userAgent(map),
     'Sec-CH-UA-Arch': map['architecture'],

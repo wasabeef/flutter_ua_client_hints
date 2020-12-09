@@ -6,9 +6,9 @@ void main() async {
   // For Demo
   WidgetsFlutterBinding.ensureInitialized();
 
-  final String ua = await userAgent();
-  final UserAgentData uaData = await userAgentData();
-  final Map<String, String> header = await userAgentClientHintsHeader();
+  final ua = await userAgent();
+  final uaData = await userAgentData();
+  final header = await userAgentClientHintsHeader();
 
   print('## User-Agent ##');
   print('User-Agent: $ua');
@@ -39,7 +39,7 @@ void main() async {
   print("Sec-CH-UA-Full-Version :${header['Sec-CH-UA-Full-Version']}");
   print("Sec-CH-UA-Mobile :${header['Sec-CH-UA-Mobile']}");
 
-  return runApp(MaterialApp(
+  return runApp(const MaterialApp(
     home: Scaffold(body: Center(child: Text('User-Agent Client Hints'))),
   ));
 }
