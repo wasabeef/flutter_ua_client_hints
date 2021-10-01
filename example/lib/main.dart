@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ua_client_hints/ua_client_hints.dart';
 
@@ -39,7 +38,34 @@ void main() async {
   print("Sec-CH-UA-Full-Version :${header['Sec-CH-UA-Full-Version']}");
   print("Sec-CH-UA-Mobile :${header['Sec-CH-UA-Mobile']}");
 
-  return runApp(const MaterialApp(
-    home: Scaffold(body: Center(child: Text('User-Agent Client Hints'))),
+  return runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text("User-Agent Client Hints"),
+      ),
+      body: Container(
+        child: ListView.separated(
+            padding: const EdgeInsets.only(top: 16),
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        header.keys.elementAt(index),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        header.values.elementAt(index),
+                      ),
+                    ],
+                  ));
+            },
+            separatorBuilder: (_, index) => const Divider(),
+            itemCount: header.length),
+      ),
+    ),
   ));
 }
