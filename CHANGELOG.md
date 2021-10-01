@@ -1,8 +1,8 @@
 ## 1.1.0
 
 Dependencies
-- Update Flutter to >=2.0.0.
-- Update Dart to >=2.12.0 .
+- Update Flutter to >=2.0.0
+- Update Dart to >=2.12.0
 
 ## 1.0.2
 
