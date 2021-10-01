@@ -1,14 +1,5 @@
-.PHONY: setup
-setup:
-	flutter channel beta
-	flutter upgrade
-	flutter pub get
-	npm install
-	gem update cocoapods
-	cd ios/ && pod install && cd ..
-
-.PHONY: dependencies
-dependencies:
+.PHONY: deps
+deps:
 	flutter pub get
 
 .PHONY: analyze
