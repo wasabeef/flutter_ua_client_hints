@@ -1,12 +1,6 @@
-.PHONY: setup
-setup:
-	npm install
-
 .PHONY: deps
 deps:
 	flutter pub get
-	gem update cocoapods
-	cd example/ios/ && pod install && cd ..
 
 .PHONY: analyze
 analyze:
