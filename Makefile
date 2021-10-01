@@ -3,10 +3,10 @@ setup:
 	npm install
 
 .PHONY: deps
-dependencies:
+deps:
 	flutter pub get
 	gem update cocoapods
-	cd ios/ && pod install && cd ..
+	cd example/ios/ && pod install && cd ..
 
 .PHONY: analyze
 analyze:
