@@ -1,7 +1,16 @@
+## 1.1.2
+
+**Feature**
+- Change Android compileSdkVersion to 33
+
+**Development**
+- Update Flutter to 3.3.0
+- Update Dart to 2.18.0
+
 ## 1.1.1
 
 **Development**
-- Update Dart SDK to >=2.17.0-0
+- Update Dart SDK to >=2.14.0
 - Replace effective_dart to flutter_lints
 - Require Android minSdkVersion to 22
 - Change Android compileSdkVersion to 32
