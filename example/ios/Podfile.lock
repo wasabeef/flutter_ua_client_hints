@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - ua_client_hints (1.1.1):
+  - ua_client_hints (1.1.2):
     - Flutter
 
 DEPENDENCIES:
@@ -14,9 +14,9 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/ua_client_hints/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
-  ua_client_hints: 5c89a6f15b917d292d7e75a1be0630ea6a0767e7
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  ua_client_hints: 3fc5251f2dc1a816db1219231acf60046917d6b9
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
 COCOAPODS: 1.11.2

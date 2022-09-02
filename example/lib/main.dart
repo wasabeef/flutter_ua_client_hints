@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:ua_client_hints/ua_client_hints.dart';
 
@@ -43,29 +45,27 @@ void main() async {
       appBar: AppBar(
         title: const Text("User-Agent Client Hints"),
       ),
-      body: Container(
-        child: ListView.separated(
-            padding: const EdgeInsets.only(top: 16),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        header.keys.elementAt(index),
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        header.values.elementAt(index),
-                      ),
-                    ],
-                  ));
-            },
-            separatorBuilder: (_, index) => const Divider(),
-            itemCount: header.length),
-      ),
+      body: ListView.separated(
+          padding: const EdgeInsets.only(top: 16),
+          shrinkWrap: true,
+          itemBuilder: (context, index) {
+            return Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      header.keys.elementAt(index),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      header.values.elementAt(index),
+                    ),
+                  ],
+                ));
+          },
+          separatorBuilder: (_, index) => const Divider(),
+          itemCount: header.length),
     ),
   ));
 }
