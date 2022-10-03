@@ -19,7 +19,7 @@ jobs:
           sdk: stable
 
       - name: Cache Gradle modules
-        uses: actions/cache@v3.0.8
+        uses: actions/cache@v3.0.10
         env:
           cache-number: ${{ secrets.CACHE_NUMBER }}
         with:
@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Cache Flutter modules
-        uses: actions/cache@v3.0.8
+        uses: actions/cache@v3.0.10
         env:
           cache-number: ${{ secrets.CACHE_NUMBER }}
         with:
