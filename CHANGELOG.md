@@ -1,3 +1,8 @@
+## 1.1.3
+
+**Development**
+- Migrate jCenter to MavenCentral for android apps.
+
 ## 1.1.2
 
 **Feature**

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ua_client_hints'
-  s.version          = '1.1.2'
+  s.version          = '1.1.3'
   s.summary          = 'Provide User-Agent Client Hints plugin.'
   s.description      = <<-DESC
 Provide User-Agent Client Hints plugin.
