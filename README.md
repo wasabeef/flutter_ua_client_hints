@@ -38,17 +38,12 @@
 
 ## [Installation](https://pub.dev/packages/ua_client_hints)
 
-0. This plugin is set the [Null Safety](https://flutter.dev/docs/null-safety).
+This plugin is set the [Null Safety](https://flutter.dev/docs/null-safety).
 
-1. Add this to your package's pubspec.yaml file
-```yaml
-dependencies:
-  ua_client_hints: ^1.x.x
-```
+Add this to your package's `pubspec.yaml` file by running the following command
 
-2. You can install packages from the command line
 ```shell
-$ flutter pub get
+$ flutter pub add ua_client_hints
 ```
 
 ## Usage
