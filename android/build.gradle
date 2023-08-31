@@ -37,7 +37,7 @@ android {
         disable 'InvalidPackage'
     }
 
-    namespace 'jp.wasabeef.uaclienthints'
+    namespace 'jp.wasabeef.ua.client_hints'
 }
 
 dependencies {
