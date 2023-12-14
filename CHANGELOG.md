@@ -1,3 +1,8 @@
+## 1.2.0
+
+**Bug fix**
+- Wrong brand name.
+
 ## 1.1.3
 
 **Development**
