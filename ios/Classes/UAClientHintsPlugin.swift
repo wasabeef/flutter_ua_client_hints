@@ -19,7 +19,7 @@ public class UAClientHintsPlugin: NSObject, FlutterPlugin {
         "platformVersion": current.systemVersion, // e.g.. 14.2
         "architecture": cpuType(), // e.g.. armv7
         "model": current.model, // e.g.. iPhone, iPod touch
-        "brand": Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") ?? "App", // e.g.. Sample App
+        "brand": "Apple", // e.g.. Apple
         "version": Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString"), // e.g.. 1.0.0
         "mobile": current.userInterfaceIdiom == .phone || current.userInterfaceIdiom == .pad, // true/false
 				"device": device(), // e.g.. iPhone13,4
