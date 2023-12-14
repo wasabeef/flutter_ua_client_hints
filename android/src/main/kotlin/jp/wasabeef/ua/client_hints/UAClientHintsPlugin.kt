@@ -39,7 +39,7 @@ class UAClientHintsPlugin : FlutterPlugin, MethodCallHandler {
           "platformVersion" to Build.VERSION.RELEASE, // e.g.. 10
           "architecture" to Build.SUPPORTED_ABIS[0], // e.g.. armv7
           "model" to Build.MODEL, // e.g.. Pixel 4 XL
-          "brand" to info?.applicationInfo?.loadLabel(context.packageManager)?.toString(), // e.g.. Sample App
+          "brand" to Build.MANUFACTURER, // e.g.. Google
           "version" to info?.versionName, // e.g.. 1.0.0
           "mobile" to (uiManager.currentModeType == Configuration.UI_MODE_TYPE_NORMAL), // true/false
 					"device" to Build.DEVICE, // e.g.. coral

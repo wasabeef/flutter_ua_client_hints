@@ -86,7 +86,7 @@ print('platform:        ${uaData.platform}');              // e.g.. 'Android'
 print('platformVersion: ${uaData.platformVersion}');       // e.g.. '10'
 print('model:           ${uaData.model}');                 // e.g.. 'Pixel 4 XL'
 print('architecture:    ${uaData.architecture}');          // e.g.. 'arm64-v8a'
-print('brand:           ${uaData.brand}');                 // e.g.. 'google'
+print('brand:           ${uaData.brand}');                 // e.g.. 'Google'
 print('mobile:          ${uaData.mobile}');                // e.g.. true
 print('device:          ${uaData.device}');                // e.g.. 'coral'
 print('appName:         ${uaData.package.appName}');       // e.g.. 'SampleApp'
