@@ -2,7 +2,7 @@ group 'jp.wasabeef.ua.client_hints'
 version '1.2.0'
 
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.9.22'
     repositories {
         google()
         mavenCentral()
