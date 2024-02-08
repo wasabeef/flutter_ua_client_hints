@@ -1,5 +1,5 @@
 .PHONY: deps
-deps:
+get:
 	flutter pub get
 
 .PHONY: analyze
