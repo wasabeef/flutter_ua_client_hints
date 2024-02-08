@@ -46,26 +46,26 @@ void main() async {
         title: const Text("User-Agent Client Hints"),
       ),
       body: ListView.separated(
-          padding: const EdgeInsets.only(top: 16),
-          shrinkWrap: true,
-          itemBuilder: (context, index) {
-            return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      header.keys.elementAt(index),
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(
-                      header.values.elementAt(index),
-                    ),
-                  ],
-                ));
-          },
-          separatorBuilder: (_, index) => const Divider(),
-          itemCount: header.length),
+        padding: const EdgeInsets.only(top: 16),
+        itemBuilder: (context, index) {
+          return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    header.keys.elementAt(index),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    header.values.elementAt(index),
+                  ),
+                ],
+              ));
+        },
+        separatorBuilder: (_, index) => const Divider(),
+        itemCount: header.length,
+      ),
     ),
   ));
 }
