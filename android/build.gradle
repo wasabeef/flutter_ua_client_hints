@@ -25,6 +25,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace 'jp.wasabeef.ua.client_hints'
     compileSdkVersion 33
 
     sourceSets {
