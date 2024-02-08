@@ -50,7 +50,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Get flutter dependencies.
-        run: make deps
+        run: make get
 
       - name: Build
         run: |
