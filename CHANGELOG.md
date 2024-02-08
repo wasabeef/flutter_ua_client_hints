@@ -1,3 +1,9 @@
+## 1.2.2
+
+**Development**
+- Update Kotlin kotlin-stdlib-jdk7 to kotlin-stdlib
+
+
 ## 1.2.1
 
 **Development**
