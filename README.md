@@ -4,12 +4,13 @@
     <img src="https://github.com/wasabeef/flutter_ua_client_hints/raw/main/art/ua_client_hints.png" width="100%/>
   </a>
 </p>
+
 <p align="center">
   <a href="https://pub.dev/packages/ua_client_hints">
     <img src="https://img.shields.io/pub/v/ua_client_hints.svg">
   </a>
   <a href="https://github.com/wasabeef/flutter_ua_client_hints/actions">
-    <img src="https://github.com/wasabeef/flutter_ua_client_hints/workflows/Flutter%20CI/badge.svg" />
+    <img src="https://github.com/wasabeef/flutter_ua_client_hints/actions/workflows/build.yml/badge.svg" />
   </a>
   <a href="https://pub.dev/packages/effective_dart">
     <img src="https://img.shields.io/badge/style-effective_dart-40c4ff.svg" />
