@@ -1,3 +1,10 @@
+## 1.2.1
+
+**Development**
+- Update Flutter to >=3.0.0
+- Update Gradle plugins to v8
+
+
 ## 1.2.0
 
 **Bug fix**

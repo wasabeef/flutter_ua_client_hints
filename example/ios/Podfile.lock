@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - ua_client_hints (1.2.0):
+  - ua_client_hints (1.2.1):
     - Flutter
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  ua_client_hints: 5887fe166a59d944cbade5eb84d60c4e417b4f55
+  ua_client_hints: a672a731d6f02fb9e6db9441297d7f3ca75b7db8
 
 PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
