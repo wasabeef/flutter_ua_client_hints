@@ -8,7 +8,7 @@ import 'user_agent_data.dart';
 /// e.g.. User-Agent: SampleApp/1.0.0 (Android 11; Pixel 4 XL; coral; arm64-v8a)
 /// e.g.. User-Agent: SampleApp/1.0.0 (iOS 14.2; iPhone; iPhone13,4; arm64v8)
 String _userAgent(Map<dynamic, dynamic> map) {
-  return '${map['brand']}/${map['version']} (${map['platform']} ${map['platformVersion']}; ${map['model']}; ${map['device']}; ${map['architecture']})';
+  return '${map['appName']}/${map['version']} (${map['platform']} ${map['platformVersion']}; ${map['model']}; ${map['device']}; ${map['architecture']})';
 }
 
 Future<String> userAgent() async {
