@@ -1,3 +1,17 @@
+## 1.3.0
+
+**Bug fix**
+
+[**BREAKING CHANGE**] [#101](https://github.com/wasabeef/flutter_ua_client_hints/pull/101)  Prefix UA with appName instead of brand by [@sgrodzicki](https://github.com/sgrodzicki).
+
+```
+Before:
+ User-Agent: Apple/1.0.0 (iOS 17.2; iPhone; Simulator; x86)
+
+After:
+ User-Agent: SampleApp/1.0.0 (iOS 17.2; iPhone; Simulator; x86)
+```
+
 ## 1.2.2
 
 **Development**
