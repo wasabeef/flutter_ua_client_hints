@@ -1,8 +1,14 @@
+## 1.3.1
+
+**Development**
+
+- [#106](https://github.com/wasabeef/flutter_ua_client_hints/pull/106) Update to Java 17 and Gradle 8.4 by [@lemonderon](https://github.com/lemonderon).
+
 ## 1.3.0
 
 **Bug fix**
 
-[**BREAKING CHANGE**] [#101](https://github.com/wasabeef/flutter_ua_client_hints/pull/101)  Prefix UA with appName instead of brand by [@sgrodzicki](https://github.com/sgrodzicki).
+- [**BREAKING CHANGE**] [#101](https://github.com/wasabeef/flutter_ua_client_hints/pull/101)  Prefix UA with appName instead of brand by [@sgrodzicki](https://github.com/sgrodzicki).
 
 ```
 Before:
