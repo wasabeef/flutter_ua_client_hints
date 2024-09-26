@@ -17,5 +17,6 @@ Provide User-Agent Client Hints plugin.
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
+  s.resource_bundles = { 'ua_client_hints_privacy' => ['PrivacyInfo.xcprivacy'] }
   s.swift_version = '5.0'
 end
