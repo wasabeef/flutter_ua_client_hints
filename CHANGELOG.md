@@ -1,3 +1,11 @@
+## 1.4.0
+
+**Feature**
+- [#124](https://github.com/wasabeef/flutter_ua_client_hints/pull/124) Add Privacy Manifest for iOS
+
+**Development**
+- [#119](https://github.com/wasabeef/flutter_ua_client_hints/pull/119) Replace Kotlin JvmToolchain function
+
 ## 1.3.1
 
 **Development**
