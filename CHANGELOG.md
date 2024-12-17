@@ -1,3 +1,8 @@
+## 1.4.1
+
+**Development**
+- [#127](https://github.com/wasabeef/flutter_ua_client_hints/pull/127) Support the Android Studio Ladybug.
+
 ## 1.4.0
 
 **Feature**
