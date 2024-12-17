@@ -2,7 +2,7 @@ group 'jp.wasabeef.ua.client_hints'
 version '1.4.0'
 
 buildscript {
-    ext.kotlin_version = '1.9.10'
+    ext.kotlin_version = '2.0.21'
     repositories {
         google()
         mavenCentral()
@@ -42,10 +42,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlin {
-        jvmToolchain {
-            it.languageVersion.set(JavaLanguageVersion.of(17))
-        }
+
+    kotlinOptions {
+        jvmTarget = '17'
     }
 }
 
