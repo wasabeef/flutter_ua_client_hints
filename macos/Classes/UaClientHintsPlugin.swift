@@ -10,10 +10,8 @@ public class UaClientHintsPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "getPlatformVersion":
-            let version = ProcessInfo.processInfo.operatingSystemVersion
-            result("\(version.majorVersion).\(version.minorVersion).\(version.patchVersion)")
-        case "getUserAgentData":
+        case "getInfo":
+            let packageInfo = getPackageInfo()
             var data: [String: Any] = [:]
             data["platform"] = "macOS"
             data["platformVersion"] = "\(ProcessInfo.processInfo.operatingSystemVersion.majorVersion).\(ProcessInfo.processInfo.operatingSystemVersion.minorVersion)"
@@ -22,10 +20,11 @@ public class UaClientHintsPlugin: NSObject, FlutterPlugin {
             data["mobile"] = false
             data["brand"] = "Apple"
             data["device"] = Host.current().localizedName ?? ""
-            
-            if let packageInfo = getPackageInfo() {
-                data["package"] = packageInfo
-            }
+            data["version"] = packageInfo["appVersion"] ?? ""
+            data["appName"] = packageInfo["appName"] ?? ""
+            data["appVersion"] = packageInfo["appVersion"] ?? ""
+            data["packageName"] = packageInfo["packageName"] ?? ""
+            data["buildNumber"] = packageInfo["buildNumber"] ?? ""
             
             result(data)
         default:
@@ -51,15 +50,14 @@ public class UaClientHintsPlugin: NSObject, FlutterPlugin {
         return String(cString: model)
     }
     
-    private func getPackageInfo() -> [String: Any]? {
-        guard let bundle = Bundle.main.infoDictionary else { return nil }
+    private func getPackageInfo() -> [String: String] {
+        let bundle = Bundle.main.infoDictionary ?? [:]
         
-        var packageInfo: [String: Any] = [:]
-        packageInfo["appName"] = bundle["CFBundleName"] as? String ?? ""
-        packageInfo["appVersion"] = bundle["CFBundleShortVersionString"] as? String ?? ""
-        packageInfo["packageName"] = bundle["CFBundleIdentifier"] as? String ?? ""
-        packageInfo["buildNumber"] = bundle["CFBundleVersion"] as? String ?? ""
-        
-        return packageInfo
+        return [
+            "appName": bundle["CFBundleName"] as? String ?? "Unknown",
+            "appVersion": bundle["CFBundleShortVersionString"] as? String ?? "0.0.0",
+            "packageName": bundle["CFBundleIdentifier"] as? String ?? "unknown",
+            "buildNumber": bundle["CFBundleVersion"] as? String ?? "0"
+        ]
     }
 } 
