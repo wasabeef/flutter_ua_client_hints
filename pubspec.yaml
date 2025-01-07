@@ -28,3 +28,5 @@ flutter:
         pluginClass: UAClientHintsPlugin
       ios:
         pluginClass: UAClientHintsPlugin
+      macos:
+        pluginClass: UaClientHintsPlugin
