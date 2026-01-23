@@ -1,3 +1,8 @@
+## 1.5.0
+
+**Feature**
+- Add macOS support.
+
 ## 1.4.1
 
 **Development**

@@ -69,6 +69,7 @@ class AppDio with DioMixin implements Dio {
 final String ua = await userAgent();
 
 print('User-Agent: $ua');  // e.g.. 'SampleApp/1.0.0 (Android 11; Pixel 4 XL; coral; arm64-v8a)'
+// e.g.. 'SampleApp/1.0.0 (macOS 15.5.0; Mac; arm64; arm64e)'
 ```
 
 ```dart
