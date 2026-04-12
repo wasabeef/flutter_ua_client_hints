@@ -1,3 +1,11 @@
+## NEXT
+
+**Feature**
+- Add Swift Package Manager support for iOS while keeping CocoaPods compatibility.
+
+**Development**
+- Update the iOS native package layout and raise the iOS deployment target to 12.0 for native builds.
+
 ## 1.4.1
 
 **Development**
