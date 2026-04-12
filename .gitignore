@@ -69,6 +69,8 @@ ios/fastlane/report.xml
 **/android/**/gen
 
 # iOS/XCode related
+**/.swiftpm/
+**/.build/
 **/ios/**/*.mode1v3
 **/ios/**/*.mode2v3
 **/ios/**/*.moved-aside
