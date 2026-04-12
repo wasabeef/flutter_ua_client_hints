@@ -5,14 +5,39 @@ on:
     tags:
       - "v*.*.*"
 
+permissions:
+  contents: write
+
 jobs:
+  publish:
+    name: Publish to pub.dev
+    permissions:
+      contents: read
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+
   release:
-    name: Release
+    name: Create GitHub Release
+    needs: publish
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Generate release notes
+        id: release_notes
+        uses: orhun/git-cliff-action@v4
+        with:
+          config: .github/cliff.toml
+          args: --latest --strip header
       - name: Releasing assets
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          body: ${{ steps.release_notes.outputs.content }}
+          draft: false
+          prerelease: false
