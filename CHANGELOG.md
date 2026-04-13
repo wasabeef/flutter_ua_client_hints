@@ -1,4 +1,4 @@
-## NEXT
+## 1.5.0
 
 **Feature**
 - Add Swift Package Manager support for iOS while keeping CocoaPods compatibility.
