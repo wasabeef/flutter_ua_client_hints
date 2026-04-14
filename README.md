@@ -41,6 +41,14 @@ $ flutter pub add ua_client_hints
 
 ## Usage
 
+Supported platforms:
+
+- Android
+- iOS
+- Web
+
+On Web, values depend on browser support for User-Agent Client Hints. Some fields such as `architecture`, `model`, or `platformVersion` can be empty on browsers that don't expose high-entropy hints.
+
 ### With [Dio](https://pub.dev/packages/dio)
 
 Add to the request header.
@@ -70,6 +78,8 @@ class AppDio with DioMixin implements Dio {
 final String ua = await userAgent();
 
 print('User-Agent: $ua');  // e.g.. 'SampleApp/1.0.0 (Android 11; Pixel 4 XL; coral; arm64-v8a)'
+// Web fallback example:
+// 'SampleApp/1.0.0 (macOS 15.5.0; Google Chrome; arm64)'
 ```
 
 ```dart

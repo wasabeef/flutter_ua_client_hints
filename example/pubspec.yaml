@@ -1,4 +1,4 @@
-name: ua_client_hins_sample_app
+name: ua_client_hints_sample_app
 description: Demonstrates how to use the ua_client_hints plugin.
 
 version: 1.0.0+1
@@ -6,7 +6,7 @@ version: 1.0.0+1
 publish_to: 'none'
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=3.3.0 <4.0.0'
 
 dependencies:
   flutter:

@@ -1,3 +1,14 @@
+## 1.6.0
+
+**Feature**
+- Add Web support.
+
+**Bug fix**
+- Respect the platform `mobile` flag in `userAgentData()`.
+
+**Development**
+- Raise the minimum Dart SDK to 3.3.0 and Flutter to 3.19.0 for the Web interop implementation.
+
 ## 1.5.0
 
 **Feature**

@@ -1,0 +1,9 @@
+{
+  "name": "ua_client_hints_sample_app",
+  "short_name": "ua_client_hints_sample_app",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0175C2",
+  "theme_color": "#0175C2",
+  "description": "Demonstrates how to use the ua_client_hints plugin."
+}

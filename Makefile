@@ -26,3 +26,7 @@ build-android:
 .PHONY: build-ios
 build-ios:
 	cd example/ && flutter build ios --no-codesign --target lib/main.dart
+
+.PHONY: build-web
+build-web:
+	cd example/ && flutter build web --target lib/main.dart
