@@ -1,8 +1,16 @@
+## 1.7.0
+
+**Feature**
+- Add macOS support.
+
+**Development**
+- Add macOS build to CI.
+- Align the macOS CocoaPods deployment target with Flutter macOS minimum requirements.
+
 ## 1.6.0
 
 **Feature**
 - Add Web support.
-- Add macOS support.
 
 **Bug fix**
 - Respect the platform `mobile` flag in `userAgentData()`.

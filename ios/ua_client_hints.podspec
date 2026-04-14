@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ua_client_hints'
-  s.version          = '1.5.0'
+  s.version          = '1.7.0'
   s.summary          = 'Provide User-Agent Client Hints plugin.'
   s.description      = <<-DESC
 Provide native iOS support for User-Agent Client Hints in Flutter apps.
