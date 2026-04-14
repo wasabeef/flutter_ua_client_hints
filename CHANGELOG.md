@@ -8,6 +8,11 @@
 
 **Development**
 - Raise the minimum Dart SDK to 3.3.0 and Flutter to 3.19.0 for the Web interop implementation.
+- Update selected toolchain dependencies manually:
+  - `husky` to `9.1.7`
+  - `actions/setup-java` to `v5`
+  - `flutter_lints` to `4.0.0`
+  - Gradle wrapper to `8.14.4`
 
 ## 1.5.0
 
