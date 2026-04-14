@@ -2,14 +2,14 @@
 
 import 'dart:convert';
 import 'dart:html' as html;
+import 'dart:js_interop';
+import 'dart:js_interop_unsafe';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:js/js_util.dart' as js_util;
 
-// TODO(ua_client_hints): Migrate this file to `package:web` + `dart:js_interop`
-// when the package can raise its Dart SDK floor. Current `package:web` stable
-// releases require Dart >= 3.4, while this package still supports Dart >= 2.17.
+// TODO(ua_client_hints): Migrate this file to `package:web` when the package
+// can raise its Dart SDK floor to match the `web` package requirements.
 class UaClientHintsWeb {
   static _PackageData? _packageData;
   static Future<_PackageData>? _packageDataLoad;
@@ -59,6 +59,7 @@ class UaClientHintsWeb {
     html.Navigator navigator,
     String browserName,
   ) async {
+    final navigatorObject = navigator as JSObject;
     final defaultPlatform = _inferPlatform(navigator);
     final defaultVersion = _inferPlatformVersion(
       navigator.userAgent,
@@ -67,7 +68,8 @@ class UaClientHintsWeb {
     final defaultArchitecture = _inferArchitecture(navigator.userAgent);
     final defaultMobile = _inferMobile(navigator.userAgent);
 
-    if (!js_util.hasProperty(navigator, 'userAgentData')) {
+    final userAgentDataValue = navigatorObject['userAgentData'];
+    if (userAgentDataValue == null) {
       return _HintsData(
         brand: browserName,
         platform: defaultPlatform,
@@ -79,22 +81,11 @@ class UaClientHintsWeb {
       );
     }
 
-    final dynamic userAgentData =
-        js_util.getProperty<dynamic>(navigator, 'userAgentData');
+    final userAgentData = userAgentDataValue as JSObject;
 
-    final brands = _coerceBrandList(
-      js_util.dartify(
-        js_util.getProperty<Object?>(userAgentData, 'brands'),
-      ),
-    );
-    final dynamic mobileValue = js_util.getProperty<Object?>(
-      userAgentData,
-      'mobile',
-    );
-    final dynamic platformValue = js_util.getProperty<Object?>(
-      userAgentData,
-      'platform',
-    );
+    final brands = _coerceBrandList(_dartifyProperty(userAgentData, 'brands'));
+    final mobileValue = _dartifyProperty(userAgentData, 'mobile');
+    final platformValue = _dartifyProperty(userAgentData, 'platform');
 
     var brand = _selectBrand(brands, browserName);
     var platform = _coerceString(platformValue, defaultPlatform);
@@ -105,37 +96,33 @@ class UaClientHintsWeb {
     final mobile = _coerceBool(mobileValue, defaultMobile);
 
     try {
-      final promise = js_util.callMethod<Object?>(
-        userAgentData,
-        'getHighEntropyValues',
-        <Object?>[
-          <String>[
-            'architecture',
-            'model',
-            'platformVersion',
-            'fullVersionList',
-          ]
+      final promise = userAgentData.callMethodVarArgs<JSPromise<JSAny?>>(
+        'getHighEntropyValues'.toJS,
+        <JSAny?>[
+          <JSString>[
+            'architecture'.toJS,
+            'model'.toJS,
+            'platformVersion'.toJS,
+            'fullVersionList'.toJS,
+          ].toJS,
         ],
       );
 
-      if (promise != null) {
-        final resolved = await js_util.promiseToFuture<Object?>(promise);
-        final dartified = js_util.dartify(resolved);
-        if (dartified is! Map) {
-          throw StateError('Unexpected userAgentData payload');
-        }
-        final values = Map<String, dynamic>.from(dartified);
-
-        architecture = _coerceString(values['architecture'], architecture);
-        model = _coerceString(values['model']);
-        platformVersion = _coerceString(
-          values['platformVersion'],
-          platformVersion,
-        );
-
-        final fullVersionBrands = _coerceBrandList(values['fullVersionList']);
-        brand = _selectBrand(fullVersionBrands, brand);
+      final dartified = (await promise.toDart).dartify();
+      if (dartified is! Map) {
+        throw StateError('Unexpected userAgentData payload');
       }
+      final values = Map<String, dynamic>.from(dartified);
+
+      architecture = _coerceString(values['architecture'], architecture);
+      model = _coerceString(values['model']);
+      platformVersion = _coerceString(
+        values['platformVersion'],
+        platformVersion,
+      );
+
+      final fullVersionBrands = _coerceBrandList(values['fullVersionList']);
+      brand = _selectBrand(fullVersionBrands, brand);
     } catch (_) {
       // Fall back to the low-entropy data and parsed user agent values.
     }
@@ -204,6 +191,10 @@ class UaClientHintsWeb {
       );
     }
   }
+}
+
+Object? _dartifyProperty(JSObject object, String property) {
+  return object[property]?.dartify();
 }
 
 class _HintsData {
