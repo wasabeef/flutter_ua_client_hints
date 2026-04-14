@@ -30,6 +30,8 @@ flutter:
         pluginClass: UAClientHintsPlugin
       ios:
         pluginClass: UAClientHintsPlugin
+      macos:
+        pluginClass: UAClientHintsPlugin
       web:
         pluginClass: UaClientHintsWeb
         fileName: ua_client_hints_web.dart

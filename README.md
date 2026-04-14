@@ -45,6 +45,7 @@ Supported platforms:
 
 - Android
 - iOS
+- macOS
 - Web
 
 On Web, values depend on browser support for User-Agent Client Hints. Some fields such as `architecture`, `model`, or `platformVersion` can be empty on browsers that don't expose high-entropy hints.
@@ -78,6 +79,8 @@ class AppDio with DioMixin implements Dio {
 final String ua = await userAgent();
 
 print('User-Agent: $ua');  // e.g.. 'SampleApp/1.0.0 (Android 11; Pixel 4 XL; coral; arm64-v8a)'
+// macOS example:
+// 'SampleApp/1.0.0 (macOS 15.5.0; Mac; Mac15,12; arm64)'
 // Web fallback example:
 // 'SampleApp/1.0.0 (macOS 15.5.0; Google Chrome; arm64)'
 ```
