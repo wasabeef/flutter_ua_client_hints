@@ -251,16 +251,12 @@ String _parseBrowserName(String userAgent) {
   };
 
   for (final entry in patterns.entries) {
-    final match =
-        RegExp('${RegExp.escape(entry.key)}([^\\s]+)').firstMatch(userAgent);
-    if (match != null) {
+    if (RegExp(RegExp.escape(entry.key)).hasMatch(userAgent)) {
       return entry.value;
     }
   }
 
-  final safariMatch =
-      RegExp(r'Version/([^\s]+).*Safari/').firstMatch(userAgent);
-  if (safariMatch != null) {
+  if (RegExp(r'Version/[^\s]+.*Safari/').hasMatch(userAgent)) {
     return 'Safari';
   }
 
