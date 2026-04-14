@@ -2,10 +2,10 @@
 
 import 'dart:convert';
 import 'dart:html' as html;
-import 'dart:js_util' as js_util;
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:js/js_util.dart' as js_util;
 
 // TODO(ua_client_hints): Migrate this file to `package:web` + `dart:js_interop`
 // when the package can raise its Dart SDK floor. Current `package:web` stable
