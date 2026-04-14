@@ -62,3 +62,15 @@ jobs:
         run: |
           make build-android
           make build-web
+
+  build_macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Get flutter dependencies.
+        run: make get
+      - name: Build macOS
+        run: make build-macos

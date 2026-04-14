@@ -2,6 +2,7 @@
 
 **Feature**
 - Add Web support.
+- Add macOS support.
 
 **Bug fix**
 - Respect the platform `mobile` flag in `userAgentData()`.

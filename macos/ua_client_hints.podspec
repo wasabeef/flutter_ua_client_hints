@@ -12,7 +12,7 @@ Provide native macOS support for User-Agent Client Hints in Flutter apps.
   s.documentation_url = 'https://pub.dev/packages/ua_client_hints'
   s.source_files = 'Classes/**/*'
   s.dependency 'FlutterMacOS'
-  s.platform = :osx, '10.11'
+  s.platform = :osx, '10.14'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
   s.swift_version = '5.0'
 end
