@@ -56,6 +56,9 @@ jobs:
       - name: Get flutter dependencies.
         run: make get
 
+      - name: Analyze
+        run: flutter analyze
+
       - name: Test
         run: flutter test
 

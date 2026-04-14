@@ -1,6 +1,5 @@
 // ignore_for_file: avoid_web_libraries_in_flutter, deprecated_member_use
 
-import 'dart:async';
 import 'dart:convert';
 import 'dart:html' as html;
 import 'dart:js_util' as js_util;
@@ -8,8 +7,12 @@ import 'dart:js_util' as js_util;
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
+// TODO(ua_client_hints): Migrate this file to `package:web` + `dart:js_interop`
+// when the package can raise its Dart SDK floor. Current `package:web` stable
+// releases require Dart >= 3.4, while this package still supports Dart >= 2.17.
 class UaClientHintsWeb {
-  static Future<_PackageData>? _packageDataFuture;
+  static _PackageData? _packageData;
+  static Future<_PackageData>? _packageDataLoad;
 
   static void registerWith(Registrar registrar) {
     final channel = MethodChannel(
@@ -32,8 +35,8 @@ class UaClientHintsWeb {
 
   Future<Map<String, dynamic>> _buildInfo() async {
     final navigator = html.window.navigator;
-    final browser = _parseBrowser(navigator.userAgent);
-    final hints = await _loadHints(navigator, browser);
+    final browserName = _parseBrowserName(navigator.userAgent);
+    final hints = await _loadHints(navigator, browserName);
     final packageData = await _loadPackageData();
 
     return <String, dynamic>{
@@ -54,7 +57,7 @@ class UaClientHintsWeb {
 
   Future<_HintsData> _loadHints(
     html.Navigator navigator,
-    _BrowserInfo browser,
+    String browserName,
   ) async {
     final defaultPlatform = _inferPlatform(navigator);
     final defaultVersion = _inferPlatformVersion(
@@ -66,7 +69,7 @@ class UaClientHintsWeb {
 
     if (!js_util.hasProperty(navigator, 'userAgentData')) {
       return _HintsData(
-        brand: browser.name,
+        brand: browserName,
         platform: defaultPlatform,
         platformVersion: defaultVersion,
         architecture: defaultArchitecture,
@@ -93,7 +96,7 @@ class UaClientHintsWeb {
       'platform',
     );
 
-    var brand = _selectBrand(brands, browser.name);
+    var brand = _selectBrand(brands, browserName);
     var platform = _coerceString(platformValue, defaultPlatform);
     var platformVersion = defaultVersion;
     var architecture = defaultArchitecture;
@@ -151,7 +154,21 @@ class UaClientHintsWeb {
   }
 
   Future<_PackageData> _loadPackageData() {
-    return _packageDataFuture ??= _fetchPackageData();
+    if (_packageData != null) {
+      return Future<_PackageData>.value(_packageData);
+    }
+
+    return _packageDataLoad ??= () async {
+      try {
+        final packageData = await _fetchPackageData();
+        if (packageData.loadedFromVersionJson) {
+          _packageData = packageData;
+        }
+        return packageData;
+      } finally {
+        _packageDataLoad = null;
+      }
+    }();
   }
 
   Future<_PackageData> _fetchPackageData() async {
@@ -172,6 +189,7 @@ class UaClientHintsWeb {
         appVersion: appVersion,
         packageName: packageName,
         buildNumber: _coerceString(values['build_number']),
+        loadedFromVersionJson: true,
       );
     } catch (_) {
       final title = html.document.title;
@@ -182,6 +200,7 @@ class UaClientHintsWeb {
         appVersion: '',
         packageName: fallbackName,
         buildNumber: '',
+        loadedFromVersionJson: false,
       );
     }
   }
@@ -213,25 +232,17 @@ class _PackageData {
     required this.appVersion,
     required this.packageName,
     required this.buildNumber,
+    required this.loadedFromVersionJson,
   });
 
   final String appName;
   final String appVersion;
   final String packageName;
   final String buildNumber;
+  final bool loadedFromVersionJson;
 }
 
-class _BrowserInfo {
-  const _BrowserInfo({
-    required this.name,
-    required this.version,
-  });
-
-  final String name;
-  final String version;
-}
-
-_BrowserInfo _parseBrowser(String userAgent) {
+String _parseBrowserName(String userAgent) {
   const patterns = <String, String>{
     'Edg/': 'Edge',
     'OPR/': 'Opera',
@@ -243,26 +254,17 @@ _BrowserInfo _parseBrowser(String userAgent) {
     final match =
         RegExp('${RegExp.escape(entry.key)}([^\\s]+)').firstMatch(userAgent);
     if (match != null) {
-      return _BrowserInfo(
-        name: entry.value,
-        version: match.group(1) ?? '',
-      );
+      return entry.value;
     }
   }
 
   final safariMatch =
       RegExp(r'Version/([^\s]+).*Safari/').firstMatch(userAgent);
   if (safariMatch != null) {
-    return _BrowserInfo(
-      name: 'Safari',
-      version: safariMatch.group(1) ?? '',
-    );
+    return 'Safari';
   }
 
-  return const _BrowserInfo(
-    name: 'Browser',
-    version: '',
-  );
+  return 'Browser';
 }
 
 List<Map<String, dynamic>> _coerceBrandList(dynamic value) {
@@ -279,12 +281,24 @@ List<Map<String, dynamic>> _coerceBrandList(dynamic value) {
 String _selectBrand(List<Map<String, dynamic>> brands, String fallback) {
   for (final brand in brands) {
     final current = _coerceString(brand['brand']);
-    if (current.isEmpty || current.contains('Not')) {
+    if (current.isEmpty || _isPlaceholderBrand(current)) {
       continue;
     }
     return current;
   }
   return fallback;
+}
+
+bool _isPlaceholderBrand(String brand) {
+  const knownPlaceholderBrands = <String>{
+    'Not A;Brand',
+    'Not;A Brand',
+    'Not_A Brand',
+    '(Not(A:Brand',
+    'Not)A;Brand',
+  };
+
+  return knownPlaceholderBrands.contains(brand.trim());
 }
 
 String _inferPlatform(html.Navigator navigator) {
@@ -361,6 +375,9 @@ String _coerceString(dynamic value, [String fallback = '']) {
 bool _coerceBool(dynamic value, bool fallback) {
   if (value is bool) {
     return value;
+  }
+  if (value is num) {
+    return value != 0;
   }
   if (value is String) {
     return value.toLowerCase() == 'true';

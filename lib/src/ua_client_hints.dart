@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/services.dart';
 
 import 'package_data.dart';
@@ -15,6 +13,7 @@ String _userAgent(Map<dynamic, dynamic> map) {
   final platform = _stringValue(map['platform']);
   final platformVersion = _stringValue(map['platformVersion']);
   final model = _stringValue(map['model']);
+  final brand = _stringValue(map['brand']);
   final device = _stringValue(map['device']);
   final architecture = _stringValue(map['architecture']);
 
@@ -30,7 +29,7 @@ String _userAgent(Map<dynamic, dynamic> map) {
     <String>[platform, platformVersion]
         .where((value) => value.isNotEmpty)
         .join(' '),
-    model,
+    model.isNotEmpty ? model : brand,
     device,
     architecture,
   ].where((value) => value.isNotEmpty).join('; ');
@@ -79,7 +78,13 @@ Future<Map<String, String>> userAgentClientHintsHeader() async {
 
 Future<Map<dynamic, dynamic>> _getInfo() async {
   final dynamic info = await _channel.invokeMethod('getInfo');
-  return Map<dynamic, dynamic>.from(info as Map);
+  if (info is! Map) {
+    throw PlatformException(
+      code: 'invalid_response',
+      message: 'ua_client_hints returned a non-map response.',
+    );
+  }
+  return Map<dynamic, dynamic>.from(info);
 }
 
 String _stringValue(dynamic value) {

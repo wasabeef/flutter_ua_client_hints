@@ -1,4 +1,4 @@
-name: ua_client_hins_sample_app
+name: ua_client_hints_sample_app
 description: Demonstrates how to use the ua_client_hints plugin.
 
 version: 1.0.0+1
