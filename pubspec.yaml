@@ -1,6 +1,6 @@
 name: ua_client_hints
 description: Provide User-Agent Client Hints to Flutter.
-version: 1.5.0
+version: 1.6.0
 homepage: https://github.com/wasabeef/flutter_ua_client_hints
 repository: https://github.com/wasabeef/flutter_ua_client_hints
 documentation: https://github.com/wasabeef/flutter_ua_client_hints
@@ -12,6 +12,8 @@ environment:
 
 dependencies:
   flutter:
+    sdk: flutter
+  flutter_web_plugins:
     sdk: flutter
 
 dev_dependencies:
@@ -28,3 +30,6 @@ flutter:
         pluginClass: UAClientHintsPlugin
       ios:
         pluginClass: UAClientHintsPlugin
+      web:
+        pluginClass: UaClientHintsWeb
+        fileName: ua_client_hints_web.dart

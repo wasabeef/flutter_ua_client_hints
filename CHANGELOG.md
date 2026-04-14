@@ -1,3 +1,11 @@
+## 1.6.0
+
+**Feature**
+- Add Web support.
+
+**Bug fix**
+- Respect the platform `mobile` flag in `userAgentData()`.
+
 ## 1.5.0
 
 **Feature**

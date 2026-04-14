@@ -56,6 +56,10 @@ jobs:
       - name: Get flutter dependencies.
         run: make get
 
+      - name: Test
+        run: flutter test
+
       - name: Build
         run: |
           make build-android
+          make build-web
