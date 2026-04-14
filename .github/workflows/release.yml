@@ -11,10 +11,23 @@ permissions:
 jobs:
   publish:
     name: Publish to pub.dev
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       id-token: write
-    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1
+    steps:
+      - uses: actions/checkout@v6
+      - uses: dart-lang/setup-dart@v1
+      - uses: flutter-actions/setup-flutter@v4
+        with:
+          channel: stable
+          version: 3.32.5
+      - name: Install dependencies
+        run: dart pub get
+      - name: Publish - dry run
+        run: dart pub publish --dry-run
+      - name: Publish to pub.dev
+        run: dart pub publish -f
 
   release:
     name: Create GitHub Release
