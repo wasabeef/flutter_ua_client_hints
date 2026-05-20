@@ -1,15 +1,12 @@
-// ignore_for_file: avoid_web_libraries_in_flutter, deprecated_member_use
-
 import 'dart:convert';
-import 'dart:html' as html;
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
+
+import 'package:web/web.dart';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-// TODO(ua_client_hints): Migrate this file to `package:web` when the package
-// can raise its Dart SDK floor to match the `web` package requirements.
 class UaClientHintsWeb {
   static _PackageData? _packageData;
   static Future<_PackageData>? _packageDataLoad;
@@ -34,7 +31,7 @@ class UaClientHintsWeb {
   }
 
   Future<Map<String, dynamic>> _buildInfo() async {
-    final navigator = html.window.navigator;
+    final navigator = window.navigator;
     final browserName = _parseBrowserName(navigator.userAgent);
     final hints = await _loadHints(navigator, browserName);
     final packageData = await _loadPackageData();
@@ -56,7 +53,7 @@ class UaClientHintsWeb {
   }
 
   Future<_HintsData> _loadHints(
-    html.Navigator navigator,
+    Navigator navigator,
     String browserName,
   ) async {
     final navigatorObject = navigator as JSObject;
@@ -161,13 +158,17 @@ class UaClientHintsWeb {
   Future<_PackageData> _fetchPackageData() async {
     try {
       final baseUri = Uri.parse(
-        html.document.baseUri ?? html.window.location.href,
+        document.baseURI.isEmpty
+            ? window.location.href
+            : document.baseURI,
       );
-      final response = await html.HttpRequest.getString(
-        baseUri.resolve('version.json').toString(),
-      );
+      final request = XMLHttpRequest()
+        ..open('GET', baseUri.resolve('version.json').toString())
+        ..send();
+      await request.onLoad.first;
+      final response = request.responseText;
       final values = jsonDecode(response) as Map<String, dynamic>;
-      final appName = _coerceString(values['app_name'], html.document.title);
+      final appName = _coerceString(values['app_name'], document.title);
       final appVersion = _coerceString(values['version']);
       final packageName = _coerceString(values['package_name'], appName);
 
@@ -179,7 +180,7 @@ class UaClientHintsWeb {
         loadedFromVersionJson: true,
       );
     } catch (_) {
-      final title = html.document.title;
+      final title = document.title;
       final fallbackName = title.isNotEmpty ? title : 'web';
 
       return _PackageData(
@@ -288,9 +289,9 @@ bool _isPlaceholderBrand(String brand) {
   return knownPlaceholderBrands.contains(brand.trim());
 }
 
-String _inferPlatform(html.Navigator navigator) {
+String _inferPlatform(Navigator navigator) {
   final userAgent = navigator.userAgent.toLowerCase();
-  final platform = (navigator.platform ?? '').toLowerCase();
+  final platform = navigator.platform.toLowerCase();
 
   if (userAgent.contains('iphone') ||
       userAgent.contains('ipad') ||
