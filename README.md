@@ -39,6 +39,9 @@ Add this to your package's `pubspec.yaml` file by running the following command
 $ flutter pub add ua_client_hints
 ```
 
+For macOS projects that consume the plugin via Swift Package Manager, use
+`macos/ua_client_hints/Package.swift`.
+
 ## Usage
 
 Supported platforms:
