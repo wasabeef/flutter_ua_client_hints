@@ -16,7 +16,7 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: dart-lang/setup-dart@v1
       - uses: flutter-actions/setup-flutter@v4
         with:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Generate release notes
