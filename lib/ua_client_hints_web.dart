@@ -1,15 +1,13 @@
-// ignore_for_file: avoid_web_libraries_in_flutter, deprecated_member_use
-
 import 'dart:convert';
-import 'dart:html' as html;
 import 'dart:js_interop';
 import 'dart:js_interop_unsafe';
 
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:web/web.dart' as web;
 
-// TODO(ua_client_hints): Migrate this file to `package:web` when the package
-// can raise its Dart SDK floor to match the `web` package requirements.
+import 'src/ua_parser.dart';
+
 class UaClientHintsWeb {
   static _PackageData? _packageData;
   static Future<_PackageData>? _packageDataLoad;
@@ -34,8 +32,8 @@ class UaClientHintsWeb {
   }
 
   Future<Map<String, dynamic>> _buildInfo() async {
-    final navigator = html.window.navigator;
-    final browserName = _parseBrowserName(navigator.userAgent);
+    final navigator = web.window.navigator;
+    final browserName = parseBrowserName(navigator.userAgent);
     final hints = await _loadHints(navigator, browserName);
     final packageData = await _loadPackageData();
 
@@ -56,17 +54,20 @@ class UaClientHintsWeb {
   }
 
   Future<_HintsData> _loadHints(
-    html.Navigator navigator,
+    web.Navigator navigator,
     String browserName,
   ) async {
     final navigatorObject = navigator as JSObject;
-    final defaultPlatform = _inferPlatform(navigator);
-    final defaultVersion = _inferPlatformVersion(
+    final defaultPlatform = inferPlatform(
+      navigator.userAgent,
+      navigator.platform,
+    );
+    final defaultVersion = inferPlatformVersion(
       navigator.userAgent,
       defaultPlatform,
     );
-    final defaultArchitecture = _inferArchitecture(navigator.userAgent);
-    final defaultMobile = _inferMobile(navigator.userAgent);
+    final defaultArchitecture = inferArchitecture(navigator.userAgent);
+    final defaultMobile = inferMobile(navigator.userAgent);
 
     final userAgentDataValue = navigatorObject['userAgentData'];
     if (userAgentDataValue == null) {
@@ -83,17 +84,17 @@ class UaClientHintsWeb {
 
     final userAgentData = userAgentDataValue as JSObject;
 
-    final brands = _coerceBrandList(_dartifyProperty(userAgentData, 'brands'));
+    final brands = coerceBrandList(_dartifyProperty(userAgentData, 'brands'));
     final mobileValue = _dartifyProperty(userAgentData, 'mobile');
     final platformValue = _dartifyProperty(userAgentData, 'platform');
 
-    var brand = _selectBrand(brands, browserName);
-    var platform = _coerceString(platformValue, defaultPlatform);
+    var brand = selectBrand(brands, browserName);
+    var platform = coerceString(platformValue, defaultPlatform);
     var platformVersion = defaultVersion;
     var architecture = defaultArchitecture;
     var model = '';
     var device = '';
-    final mobile = _coerceBool(mobileValue, defaultMobile);
+    final mobile = coerceBool(mobileValue, defaultMobile);
 
     try {
       final promise = userAgentData.callMethodVarArgs<JSPromise<JSAny?>>(
@@ -114,15 +115,15 @@ class UaClientHintsWeb {
       }
       final values = Map<String, dynamic>.from(dartified);
 
-      architecture = _coerceString(values['architecture'], architecture);
-      model = _coerceString(values['model']);
-      platformVersion = _coerceString(
+      architecture = coerceString(values['architecture'], architecture);
+      model = coerceString(values['model']);
+      platformVersion = coerceString(
         values['platformVersion'],
         platformVersion,
       );
 
-      final fullVersionBrands = _coerceBrandList(values['fullVersionList']);
-      brand = _selectBrand(fullVersionBrands, brand);
+      final fullVersionBrands = coerceBrandList(values['fullVersionList']);
+      brand = selectBrand(fullVersionBrands, brand);
     } catch (_) {
       // Fall back to the low-entropy data and parsed user agent values.
     }
@@ -160,26 +161,27 @@ class UaClientHintsWeb {
 
   Future<_PackageData> _fetchPackageData() async {
     try {
+      final baseUriString = web.document.baseURI;
       final baseUri = Uri.parse(
-        html.document.baseUri ?? html.window.location.href,
+        baseUriString.isNotEmpty ? baseUriString : web.window.location.href,
       );
-      final response = await html.HttpRequest.getString(
+      final response = await _getString(
         baseUri.resolve('version.json').toString(),
       );
       final values = jsonDecode(response) as Map<String, dynamic>;
-      final appName = _coerceString(values['app_name'], html.document.title);
-      final appVersion = _coerceString(values['version']);
-      final packageName = _coerceString(values['package_name'], appName);
+      final appName = coerceString(values['app_name'], web.document.title);
+      final appVersion = coerceString(values['version']);
+      final packageName = coerceString(values['package_name'], appName);
 
       return _PackageData(
         appName: appName,
         appVersion: appVersion,
         packageName: packageName,
-        buildNumber: _coerceString(values['build_number']),
+        buildNumber: coerceString(values['build_number']),
         loadedFromVersionJson: true,
       );
     } catch (_) {
-      final title = html.document.title;
+      final title = web.document.title;
       final fallbackName = title.isNotEmpty ? title : 'web';
 
       return _PackageData(
@@ -191,6 +193,15 @@ class UaClientHintsWeb {
       );
     }
   }
+}
+
+Future<String> _getString(String url) async {
+  final response = await web.window.fetch(url.toJS).toDart;
+  if (!response.ok) {
+    throw StateError('GET $url failed with status ${response.status}.');
+  }
+  final text = await response.text().toDart;
+  return text.toDart;
 }
 
 Object? _dartifyProperty(JSObject object, String property) {
@@ -231,143 +242,4 @@ class _PackageData {
   final String packageName;
   final String buildNumber;
   final bool loadedFromVersionJson;
-}
-
-String _parseBrowserName(String userAgent) {
-  const patterns = <String, String>{
-    'Edg/': 'Edge',
-    'OPR/': 'Opera',
-    'Chrome/': 'Chrome',
-    'Firefox/': 'Firefox',
-  };
-
-  for (final entry in patterns.entries) {
-    if (RegExp(RegExp.escape(entry.key)).hasMatch(userAgent)) {
-      return entry.value;
-    }
-  }
-
-  if (RegExp(r'Version/[^\s]+.*Safari/').hasMatch(userAgent)) {
-    return 'Safari';
-  }
-
-  return 'Browser';
-}
-
-List<Map<String, dynamic>> _coerceBrandList(dynamic value) {
-  if (value is! List) {
-    return const <Map<String, dynamic>>[];
-  }
-
-  return value
-      .whereType<Map>()
-      .map((item) => Map<String, dynamic>.from(item))
-      .toList();
-}
-
-String _selectBrand(List<Map<String, dynamic>> brands, String fallback) {
-  for (final brand in brands) {
-    final current = _coerceString(brand['brand']);
-    if (current.isEmpty || _isPlaceholderBrand(current)) {
-      continue;
-    }
-    return current;
-  }
-  return fallback;
-}
-
-bool _isPlaceholderBrand(String brand) {
-  const knownPlaceholderBrands = <String>{
-    'Not A;Brand',
-    'Not;A Brand',
-    'Not_A Brand',
-    '(Not(A:Brand',
-    'Not)A;Brand',
-  };
-
-  return knownPlaceholderBrands.contains(brand.trim());
-}
-
-String _inferPlatform(html.Navigator navigator) {
-  final userAgent = navigator.userAgent.toLowerCase();
-  final platform = (navigator.platform ?? '').toLowerCase();
-
-  if (userAgent.contains('iphone') ||
-      userAgent.contains('ipad') ||
-      userAgent.contains('ipod')) {
-    return 'iOS';
-  }
-  if (userAgent.contains('android')) {
-    return 'Android';
-  }
-  if (platform.contains('mac')) {
-    return 'macOS';
-  }
-  if (platform.contains('win')) {
-    return 'Windows';
-  }
-  if (platform.contains('linux')) {
-    return 'Linux';
-  }
-  return 'Web';
-}
-
-String _inferPlatformVersion(String userAgent, String platform) {
-  final patterns = <String, RegExp>{
-    'Android': RegExp(r'Android\s([0-9.]+)'),
-    'iOS': RegExp(r'OS\s([0-9_]+)'),
-    'macOS': RegExp(r'Mac OS X\s([0-9_]+)'),
-    'Windows': RegExp(r'Windows NT\s([0-9.]+)'),
-  };
-
-  final match = patterns[platform]?.firstMatch(userAgent);
-  if (match == null) {
-    return '';
-  }
-
-  return (match.group(1) ?? '').replaceAll('_', '.');
-}
-
-String _inferArchitecture(String userAgent) {
-  final normalized = userAgent.toLowerCase();
-  if (normalized.contains('arm64') || normalized.contains('aarch64')) {
-    return 'arm64';
-  }
-  if (normalized.contains('arm')) {
-    return 'arm';
-  }
-  if (normalized.contains('x86_64') ||
-      normalized.contains('win64') ||
-      normalized.contains('x64')) {
-    return 'x86_64';
-  }
-  if (normalized.contains('i686') || normalized.contains('i386')) {
-    return 'x86';
-  }
-  return '';
-}
-
-bool _inferMobile(String userAgent) {
-  return RegExp(
-    r'Android|iPhone|iPad|iPod|Mobi',
-    caseSensitive: false,
-  ).hasMatch(userAgent);
-}
-
-String _coerceString(dynamic value, [String fallback = '']) {
-  final text = value?.toString() ?? '';
-  return text.isEmpty ? fallback : text;
-}
-
-bool _coerceBool(dynamic value, bool fallback) {
-  if (value is bool) {
-    return value;
-  }
-  if (value is num) {
-    return value != 0;
-  }
-  if (value is String) {
-    return value.toLowerCase() == 'true';
-  }
-  return fallback;
 }

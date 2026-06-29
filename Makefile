@@ -34,3 +34,7 @@ build-macos:
 .PHONY: build-web
 build-web:
 	cd example/ && flutter build web --target lib/main.dart
+
+.PHONY: build-web-wasm
+build-web-wasm:
+	cd example/ && flutter build web --wasm --target lib/main.dart
