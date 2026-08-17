@@ -1,3 +1,8 @@
+## Unreleased
+
+**Bug fix**
+- Support AGP 9 built-in Kotlin while preserving compatibility with projects using the external Kotlin Gradle Plugin.
+
 ## 1.7.0
 
 **Feature**
